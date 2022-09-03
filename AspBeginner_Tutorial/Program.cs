@@ -1,4 +1,5 @@
 using AspBeginner_Tutorial.Data;
+using AspBeginner_Tutorial.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,11 +10,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IRegionRespository, RegionRespository>();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"));
 });
-
 
 var app = builder.Build();
 
